@@ -7,13 +7,12 @@ import NewMovie from './NewMovie';
 export default class Movies extends Component {
   state = {
     movies: [],
-    counter: 0
+    counter: 1
   };
 
   componentDidMount() {
     this.setState(() => ({
       movies: MovieService.getMovies(),
-      counter: this.state.movies.length + 1
     }));
   }
 
@@ -28,7 +27,11 @@ export default class Movies extends Component {
       rating: 0
     };
     this.setState({ counter: this.state.counter + 1 });
-    this.setState({movies: [...this.state.movies, newMovie]});
+    this.setState({ movies: [...this.state.movies, newMovie] });
+  }
+
+  onDelete = (movie) => {
+    this.setState({ movies: this.state.movies.filter(movieToDelete => movieToDelete.id !== movie.id) });
   }
 
   render() {
@@ -37,7 +40,7 @@ export default class Movies extends Component {
         <div className="d-flex flex-row">
           <div className="col-sm-12">
             <NewMovie addNewMovie={this.addNewMovie} />
-            <MovieList movies={this.state.movies} />
+            <MovieList movies={this.state.movies} onDelete={this.onDelete} />
           </div>
         </div>
       </div>
