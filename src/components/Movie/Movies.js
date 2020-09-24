@@ -34,13 +34,19 @@ export default class Movies extends Component {
     this.setState({ movies: this.state.movies.filter(movieToDelete => movieToDelete.id !== movie.id) });
   }
 
+  onStarClick = (ratedMovieId, newRating) => {
+    console.log(ratedMovieId);
+    console.log(newRating);
+    this.setState({ movies: this.state.movies.map((movie) => {movie.rating = (movie.id === ratedMovieId ? newRating : movie.rating)}) });
+  }
+
   render() {
     return (
       <div className="container-fluid" style={{ marginLeft: '-15px' }}>
         <div className="d-flex flex-row">
           <div className="col-sm-12">
             <NewMovie addNewMovie={this.addNewMovie} />
-            <MovieList movies={this.state.movies} onDelete={this.onDelete} />
+            <MovieList movies={this.state.movies} onDelete={this.onDelete} onStarClick={this.onStarClick} />
           </div>
         </div>
       </div>
